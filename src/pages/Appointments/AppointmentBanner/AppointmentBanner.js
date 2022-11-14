@@ -13,7 +13,7 @@ const AppointmentBanner = ({ selectedDate, setSelectedDate }) => {
     <header>
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row">
-          <div className="w-1/2">
+          <div className="w-full">
             <DayPicker
               mode="single"
               selected={selectedDate}
@@ -24,7 +24,7 @@ const AppointmentBanner = ({ selectedDate, setSelectedDate }) => {
           <img
             alt="doctors-chair"
             src={chair}
-            className="max-w-sm w-1/2 rounded-lg shadow-2xl"
+            className="max-width-sm w-1/2 rounded-lg shadow-2xl"
           />
         </div>
       </div>
