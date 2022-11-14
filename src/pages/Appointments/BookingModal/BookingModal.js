@@ -8,13 +8,13 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
     event.preventDefault();
     const form = event.target;
     const slot = form.slot.value;
-    const name = form.name.value;
+    const userName = form.name.value;
     const email = form.email.value;
     const phone = form.phone.value;
     const booking = {
       appointmentDate: date,
-      patient: name,
       treatment: name,
+      patient: userName,
       slot,
       email,
       phone,
