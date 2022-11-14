@@ -3,13 +3,12 @@ import chair from "../../../assets/images/chair.png";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { format } from "date-fns/esm";
-const AppointmentBanner = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  let footer = <p>Please pick a day.</p>;
-  if (selectedDate) {
-    footer = <p>You picked {format(selectedDate, "PP")}.</p>;
-  }
+const AppointmentBanner = ({ selectedDate, setSelectedDate }) => {
+  // let footer = <p>Please pick a day.</p>;
+  // if (selectedDate) {
+  //   <p>You picked {format(selectedDate, "PP")}.</p>;
+  // }
   return (
     <header>
       <div className="hero">
@@ -19,9 +18,9 @@ const AppointmentBanner = () => {
               mode="single"
               selected={selectedDate}
               onSelect={setSelectedDate}
-              footer={footer}
             />
           </div>
+
           <img
             alt="doctors-chair"
             src={chair}
