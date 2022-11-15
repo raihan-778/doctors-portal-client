@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
   const {
     register,
     formState: { errors },
@@ -12,7 +15,15 @@ const Login = () => {
 
   const handleLogin = (data) => {
     console.log(data);
-    console.log("clicked");
+    login(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        setLoginError("");
+      })
+      .catch((err) => {
+        console.error(err.message);
+        setLoginError(err.message);
+      });
   };
 
   return (
@@ -47,13 +58,6 @@ const Login = () => {
               className="input input-bordered w-full max-w-xs"
               {...register("password", {
                 required: "Password is required",
-                pattern: /^[A-Za-z]+$/i,
-                message: "password should be at least 1 alphabate",
-                minLength: {
-                  value: 6,
-
-                  message: "Password must be at least 6 characters",
-                },
               })}
               aria-invalid={errors.password ? "true" : "false"}
             />
@@ -72,10 +76,13 @@ const Login = () => {
             value="Login"
             type="submit"
           />
+          {loginError && <p>{loginError}</p>}
           <label className="label">
             <span className="label-text">
               New to doctors portal!{" "}
-              <Link className="text-secondary">Create New Account.</Link>
+              <Link to="/signup" className="text-secondary">
+                Create New Account.
+              </Link>
             </span>
           </label>
           <div className="divider">OR</div>
