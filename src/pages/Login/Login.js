@@ -10,8 +10,9 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
-  const handleLogin = (e) => {
-    console.log(e);
+  const handleLogin = (data) => {
+    console.log(data);
+    console.log("clicked");
   };
 
   return (
@@ -44,12 +45,17 @@ const Login = () => {
               type="password"
               placeholder="Type here"
               className="input input-bordered w-full max-w-xs"
-              aria-invalid={errors.password ? "true" : "false"}
               {...register("password", {
                 required: "Password is required",
                 pattern: /^[A-Za-z]+$/i,
-                minLength: 6,
+                message: "password should be at least 1 alphabate",
+                minLength: {
+                  value: 6,
+
+                  message: "Password must be at least 6 characters",
+                },
               })}
+              aria-invalid={errors.password ? "true" : "false"}
             />
             {errors.password && (
               <p className="text-red-500" role="alert">
