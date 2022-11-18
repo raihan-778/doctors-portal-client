@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserInfo } = useContext(AuthContext);
+  const [signupError, setSignupError] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
@@ -15,9 +19,25 @@ const SignUp = () => {
     console.log(data);
     console.log(errors);
     createUser(data.email, data.password)
-      .then((result) => console.log(result.user))
-      .catch((err) => console.error(err));
+      .then((result) => {
+        setSignupError("");
+        console.log(result.user);
+        toast("user created successfully");
+        const userInfo = {
+          displayName: data.name,
+        };
+        updateUserInfo(userInfo)
+          .then((result) => {
+            navigate("/");
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => {
+        console.error(err);
+        setSignupError(err.message);
+      });
   };
+
   return (
     <div className="flex  h-[800px] justify-center  items-center">
       <div>
@@ -104,6 +124,7 @@ const SignUp = () => {
               </Link>
             </span>
           </label>
+          {signupError && <p>{signupError}</p>}
           <div className="divider">OR</div>
           <button className="btn btn-outline w-full">
             CONTINUE WITH GOOGLE

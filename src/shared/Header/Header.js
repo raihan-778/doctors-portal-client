@@ -18,19 +18,24 @@ const Header = () => {
       <Link className="mr-2 btn btn-ghost" to="/about">
         About
       </Link>
-      <Link className="mr-2 btn btn-ghost" to="appointment">
+      <Link className="mr-2 btn btn-ghost" to="/appointment">
         Appoiments
       </Link>
-      <Link className="mr-2 btn btn-ghost" to="reviews">
+      <Link className="mr-2 btn btn-ghost" to="/reviews">
         Reviews
       </Link>
-      <Link className="mr-2 btn btn-ghost" to="/contact">
+      <Link className="mr-2 btn btn-ghost" to="/contactus">
         Contact Us
       </Link>
       {user?.uid ? (
-        <button onClick={handleLogout} className="btn btn-outline">
-          SignOut
-        </button>
+        <>
+          <Link className=" mr-2 btn btn-ghost" to="/dashboard">
+            Dashboard
+          </Link>
+          <button onClick={handleLogout} className="btn btn-outline">
+            SignOut
+          </button>
+        </>
       ) : (
         <Link className="mr-2 btn btn-ghost" to="login">
           Login
