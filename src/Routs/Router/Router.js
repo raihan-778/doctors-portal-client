@@ -11,6 +11,7 @@ import Login from "../../pages/Login/Login";
 import Reviews from "../../pages/Reviews/Reviews";
 import SignUp from "../../pages/SignUp/SignUp";
 import PrivateRoute from "../../PrivateRoute/PrivateRoute";
+import MyAppointment from "../../Dashboard/MyAppointment";
 
 const router = createBrowserRouter([
   {
@@ -45,19 +46,19 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp />,
       },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
       {
         path: "/dashboard",
-        element: (
-          <PrivateRoute>
-            <DashboardLayout></DashboardLayout>
-          </PrivateRoute>
-        ),
-        children: [
-          {
-            path: "/dashboard",
-            element: <Dashboard></Dashboard>,
-          },
-        ],
+        element: <MyAppointment></MyAppointment>,
       },
     ],
   },
