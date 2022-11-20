@@ -1,15 +1,26 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 
 const AddDoctors = () => {
+  const { data: sepcialities = [], isLoading } = useQuery({
+    queryKey: ["speciality"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/appointmentSpeciality");
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const handleAddDoctor = (data) => {};
+  const handleAddDoctor = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="w-96 p-7">
@@ -56,32 +67,39 @@ const AddDoctors = () => {
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text">Enter Password</span>
+            <span className="label-text">Speciality</span>
+          </label>
+        </div>
+        <select
+          {...register("speciality", {
+            required: "Please select a speciality",
+          })}
+          className="select select-bordered w-full max-w-xs"
+        >
+          <option disabled selected>
+            Pick a Speciality.
+          </option>
+          {sepcialities.map((speciality) => (
+            <option key={speciality._id}>{speciality.name}</option>
+          ))}
+        </select>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text">Enter Your Name</span>
           </label>
           <input
-            {...register("password", {
-              minLength: 6,
-              required: "Password should be 6 caracter long or more",
-              pattern: {
-                value:
-                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                message: "password must be strong",
-              },
-            })}
-            type="password"
-            name="password"
-            placeholder="Type here"
+            {...register("img")}
+            type="file"
+            placeholder="Type your name"
+            name="img"
             className="input input-bordered w-full max-w-xs"
           />
+          {errors.img?.type === "required" && (
+            <p className="text-orange-600" role="alert">
+              {errors.img?.message}
+            </p>
+          )}
         </div>
-        {errors.password && (
-          <p className="text-orange-600" role="alert">
-            {errors.password?.message}
-          </p>
-        )}
-        <label className="label">
-          <span className="label-text">Forgot Password?</span>
-        </label>
 
         <input
           className="btn mt-5 w-full max-w-xs btn-accent"
