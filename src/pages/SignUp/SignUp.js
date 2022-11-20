@@ -3,11 +3,18 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   const { createUser, updateUserInfo } = useContext(AuthContext);
   const [signupError, setSignupError] = useState("");
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const navigate = useNavigate();
+
+  if (token) {
+    navigate("/");
+  }
 
   const {
     register,
@@ -47,8 +54,7 @@ const SignUp = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Save user", data);
-          navigate("/");
+          setCreatedUserEmail(email);
         });
     };
   };
@@ -128,7 +134,7 @@ const SignUp = () => {
 
           <input
             className="btn mt-5 w-full max-w-xs btn-accent"
-            value="Login"
+            value="Sign Up"
             type="submit"
           />
           <label className="label">
