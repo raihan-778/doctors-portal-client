@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
 
 const AddDoctors = () => {
   const { data: sepcialities = [], isLoading } = useQuery({
@@ -11,12 +14,16 @@ const AddDoctors = () => {
       return data;
     },
   });
-
+  if (isLoading) {
+    <LoadingSpinner></LoadingSpinner>;
+  }
   /*
 img:ce9c20640044f2f3784a2967dfce6506 
  */
 
   const imgHostKey = process.env.REACT_APP_imgbb_key;
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -29,6 +36,40 @@ img:ce9c20640044f2f3784a2967dfce6506
     const image = data.img[0];
     const formData = new FormData();
     formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          console.log(imgData.data.url);
+          const doctor = {
+            name: data.name,
+            email: data.email,
+            speciality: data.speciality,
+            image: imgData.data.url,
+          };
+
+          //save doctors info in the database
+
+          fetch(`http://localhost:5000/doctors`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: JSON.stringify(doctor),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              toast.success(`${data.name} Added Successful`);
+              navigate("/dashboard/managedoctors");
+            });
+        }
+      });
   };
 
   return (
