@@ -12,6 +12,12 @@ const AddDoctors = () => {
     },
   });
 
+  /*
+img:ce9c20640044f2f3784a2967dfce6506 
+ */
+
+  const imgHostKey = process.env.REACT_APP_imgbb_key;
+
   const {
     register,
     formState: { errors },
@@ -19,7 +25,10 @@ const AddDoctors = () => {
   } = useForm();
 
   const handleAddDoctor = (data) => {
-    console.log(data);
+    console.log(data.img[0]);
+    const image = data.img[0];
+    const formData = new FormData();
+    formData.append("image", image);
   };
 
   return (
