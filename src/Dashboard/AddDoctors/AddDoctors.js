@@ -6,6 +6,14 @@ import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
 
 const AddDoctors = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const imgHostKey = process.env.REACT_APP_imgbb_key;
+
   const { data: sepcialities = [], isLoading } = useQuery({
     queryKey: ["speciality"],
     queryFn: async () => {
@@ -15,21 +23,11 @@ const AddDoctors = () => {
     },
   });
   if (isLoading) {
-    <LoadingSpinner></LoadingSpinner>;
+    return <LoadingSpinner></LoadingSpinner>;
   }
   /*
 img:ce9c20640044f2f3784a2967dfce6506 
  */
-
-  const imgHostKey = process.env.REACT_APP_imgbb_key;
-
-  const navigate = useNavigate();
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
 
   const handleAddDoctor = (data) => {
     console.log(data.img[0]);
