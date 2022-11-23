@@ -96,9 +96,9 @@ const router = createBrowserRouter([
         loader: async ({ params }) =>
           fetch(`http://localhost:5000/booking/${params.id}`),
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             <Payment></Payment>
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
     ],

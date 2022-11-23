@@ -25,7 +25,7 @@ const MyAppointment = () => {
     <div>
       <h3 className="text-3xl">My Appointment</h3>
 
-      <div className="overflow-x- p-5">
+      <div className="overflow-x p-5">
         <table className="table mb-5 w-full">
           <thead>
             <tr>
@@ -52,7 +52,9 @@ const MyAppointment = () => {
                     </Link>
                   )}
                   {booking?.price && booking?.paid && (
-                    <span className=" text-primary">Paid</span>
+                    <span className="text-primary font-semibold text-xl">
+                      Paid
+                    </span>
                   )}
                 </td>
               </tr>
