@@ -15,11 +15,14 @@ const ManageDoctors = () => {
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5000/doctors", {
-          headers: {
-            authorization: `bearar ${localStorage.getItem("access_token")}`,
-          },
-        });
+        const res = await fetch(
+          "https://doctors-portal-server-beryl-xi.vercel.app/doctors",
+          {
+            headers: {
+              authorization: `bearar ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (err) {
@@ -34,12 +37,15 @@ const ManageDoctors = () => {
 
   const handleDeleteDoctor = (doctor) => {
     console.log(doctor);
-    fetch(`http://localhost:5000/doctors/${doctor._id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `bearea ${localStorage.getItem("access_token")}`,
-      },
-    })
+    fetch(
+      `https://doctors-portal-server-beryl-xi.vercel.app/doctors/${doctor._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `bearea ${localStorage.getItem("access_token")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

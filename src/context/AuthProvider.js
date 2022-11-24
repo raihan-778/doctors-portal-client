@@ -26,11 +26,6 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = () => {
-    setLoading(true);
-    return signOut(auth);
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
@@ -39,10 +34,15 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const updateUserInfo = (info) => {
     return updateProfile(auth.currentUser, info);
+  };
+
+  const logout = () => {
+    setLoading(true);
+    return signOut(auth);
   };
 
   const authInfo = {

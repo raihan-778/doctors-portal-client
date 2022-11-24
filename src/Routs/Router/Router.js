@@ -94,12 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/payment/:id",
         loader: async ({ params }) =>
-          fetch(`http://localhost:5000/booking/${params.id}`),
-        element: (
-          <AdminRoute>
-            <Payment></Payment>
-          </AdminRoute>
-        ),
+          fetch(
+            `https://doctors-portal-server-beryl-xi.vercel.app/booking/${params.id}`
+          ),
+        element: <Payment></Payment>,
       },
     ],
   },

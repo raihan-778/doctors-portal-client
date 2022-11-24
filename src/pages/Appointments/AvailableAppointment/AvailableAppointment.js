@@ -19,9 +19,9 @@ const AvailableAppointment = ({ selectedDate, setSelectedDate }) => {
     //here appointmentOption=[] is used to avoid innitial data fetching err.
     queryKey: ["appointmentOptions", date], //here query key is mostly working as useEffect parameter inside []
     queryFn: () =>
-      fetch(`http://localhost:5000/v2/appointmentOptions?date=${date}`).then(
-        (res) => res.json()
-      ),
+      fetch(
+        `https://doctors-portal-server-beryl-xi.vercel.app/v2/appointmentOptions?date=${date}`
+      ).then((res) => res.json()),
   });
 
   if (isLoading) {
@@ -29,7 +29,7 @@ const AvailableAppointment = ({ selectedDate, setSelectedDate }) => {
   }
 
   // useEffect(() => {
-  //   fetch("http://localhost:5000/appointmentOptions")
+  //   fetch("https://doctors-portal-server-beryl-xi.vercel.app/appointmentOptions")
   //     .then((res) => res.json())
   //     .then((data) => setAppointmentOption(data));
   // }, []);/* This code block is replaced by react query */

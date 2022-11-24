@@ -17,7 +17,9 @@ const AddDoctors = () => {
   const { data: sepcialities = [], isLoading } = useQuery({
     queryKey: ["speciality"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/appointmentSpeciality");
+      const res = await fetch(
+        "https://doctors-portal-server-beryl-xi.vercel.app/appointmentSpeciality"
+      );
       const data = await res.json();
       return data;
     },
@@ -52,7 +54,7 @@ img:ce9c20640044f2f3784a2967dfce6506
 
           //save doctors info in the database
 
-          fetch(`http://localhost:5000/doctors`, {
+          fetch(`https://doctors-portal-server-beryl-xi.vercel.app/doctors`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
